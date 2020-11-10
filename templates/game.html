@@ -1,0 +1,112 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style type="text/css">
+    body {
+      background-image: url("{% static "img/fondo.jpg" %}");
+      background-repeat: repeat;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="row">
+      <!-- User Board -->
+      <div class="col-6">
+        <br>
+        
+        <div class="card">
+
+          <div class="card-title">
+            <h2>User Board</h2>
+            <hr>
+          </div>
+
+          <div class="card-title">
+            <div class="row">
+
+              {% for user_card in player_board.cards.all %}
+                <div class="col-3">
+                  {% if user_card.checked %}
+                    <div class="card" style="width: 60%;">
+                      <img src="{{ user_card.card.cross_image.url }}" class="card-img-top" alt="...">
+                    </div>
+                  {% else %}
+                    <div class="card" style="width: 60%;">
+                      <img src="{{ user_card.card.image.url }}" class="card-img-top" alt="...">
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Computer Board -->
+      <div class="col-6">
+        <br>
+        
+        <div class="card">
+
+          <div class="card-title">
+            <h2>Computer Board</h2>
+            <hr>
+          </div>
+
+          <div class="card-title">
+            <div class="row">
+
+              {% for computer_card in computer_board.cards.all %}
+                <div class="col-3">
+                  {% if computer_card.checked %}
+                    <div class="card" style="width: 60%;">
+                      <img src="{{ computer_card.card.cross_image.url }}" class="card-img-top" alt="...">
+                    </div>
+                  {% else %}
+                    <div class="card" style="width: 60%;">
+                      <img src="{{ computer_card.card.image.url }}" class="card-img-top" alt="...">
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="row">
+        {% if not player_board.winner and not computer_board.winner %}
+          <a href="{% url 'game:new_card' game.id %}" class="btn btn-success">Nueva carta</a>
+        {% elif not player_board.winner and computer_board.winner %}
+          <div class="text-center">
+            <h1>La Computadora gana</h1>
+          </div>
+        {% elif player_board.winner and not computer_board.winner %}
+          <div class="text-center">
+            <h1>Has ganado</h1>
+          </div>
+        {% elif player_board.winner and computer_board.winner %}
+          <div class="text-center">
+            <h1>Empate</h1>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

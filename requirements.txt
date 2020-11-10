@@ -1,0 +1,8 @@
+Django==2.2.13
+numpy==1.17.1
+opencv-python==4.1.0.25
+Pillow>=7.1.0
+pytesseract==0.3.0
+pytz==2019.2
+sqlparse==0.3.0
+xlrd==1.2.0
